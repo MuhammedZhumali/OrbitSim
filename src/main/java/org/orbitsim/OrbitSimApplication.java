@@ -22,14 +22,16 @@ public class OrbitSimApplication {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("Enter attitude in km: ");
-        double attitudeKm = sc.nextDouble();
-        System.out.println("Enter time step in seconds: ");
+        System.out.println("Enter altitude in km: ");
+        double altitudeKm = sc.nextDouble();
+        System.out.print("Enter total simulation time in seconds: ");
+        double totalTimeSec = sc.nextDouble();
+        System.out.print("Enter time step in seconds: ");
         double timeStepInSeconds = sc.nextDouble();
-        System.out.println("Enter number of steps: ");
-        int steps = sc.nextInt();
+        int steps = (int) (totalTimeSec / timeStepInSeconds);
 
-        double altitudeM = attitudeKm * 1000.0;
+
+        double altitudeM = altitudeKm * 1000.0;
         double r = R_EARTH + altitudeM;
         double omega = computeAngularVelocity(r);
         double periodSec = computeOrbitalPeriod(r);
@@ -44,11 +46,14 @@ public class OrbitSimApplication {
             double angleRad = omega * t;
             double x = r * Math.cos(angleRad);
             double y = r * Math.sin(angleRad);
+            double angleDeg = Math.toDegrees(angleRad % (2 * Math.PI));
+            double fraction = t / periodSec;
+            double fractionPercent = fraction * 100;
 
             double radiusNow = Math.sqrt(x * x + y * y); // Pythagorean theory in 2D
             System.out.printf(
-                    "t=%6.1f s | x=%12.2f m | y=%12.2f m | r=%.2f m%n",
-                    t, x, y, radiusNow
+                    "t=%6.1f s | θ=%7.2f° | orbit=%.3f (%.1f%%) | x=%12.2f m | y=%12.2f m | r=%.2f m%n",
+                    t, angleDeg, fraction, fractionPercent, x, y, radiusNow
             );
         }
 
