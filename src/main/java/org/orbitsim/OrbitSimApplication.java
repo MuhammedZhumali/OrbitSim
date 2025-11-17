@@ -74,4 +74,8 @@ Theory Math
     Circular orbit angular velocity (w) = sqrt(u/T^3)
     Position in 2D at time t: x(t) = r*cos(wt), y(t) = r*sin(wt)
 
+    Eccentricity
+    if e = 0 - ideal circle
+    if e > 0 - ellipse
+    if e = 1 - very stretched orbit
 */
